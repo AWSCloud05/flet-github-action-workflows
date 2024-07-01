@@ -39,10 +39,12 @@ jobs:
         python -m pip install --upgrade pip
         #pip install -r requirements.txt
   
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: 1.17.0
+    #- name: Setup Flutter
+     # uses: subosito/flutter-action@v2
+      #with:
+       # flutter-version: 1.17.0
+     - name: Test connection
+       run: curl "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json
 
     - name: Flet Build Web
       run: |
