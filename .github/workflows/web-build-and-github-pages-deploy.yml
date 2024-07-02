@@ -49,9 +49,9 @@ jobs:
     - run: flutter --version
 
     - name: Flet Build Web
-      run: |
-            echo "flet-github-action-workflows: ${flet-github-action-workflows}, USER: ${AWSCloud05%/*}, PROJECT_BASE_URL: ${flet-github-action-workflows#*/}"
-            flet build web --base-url ${flet-github-action-workflows#*/} --route-url-strategy hash
+      run:  "${{ toJSON(github) }}" 
+            #echo "flet-github-action-workflows: ${flet-github-action-workflows}, USER: ${AWSCloud05%/*}, PROJECT_BASE_URL: ${flet-github-action-workflows#*/}"
+            #flet build web --base-url ${flet-github-action-workflows#*/} --route-url-strategy hash
     
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v3
