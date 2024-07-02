@@ -50,7 +50,7 @@ jobs:
 
     - name: Flet Build Web
       run: |
-            echo "flet-github-action-workflows: ${flet-github-action-workflows}, USER: ${flet-github-action-workflows%/*}, PROJECT_BASE_URL: ${flet-github-action-workflows#*/}"
+            echo "flet-github-action-workflows: ${flet-github-action-workflows}, USER: ${AWSCloud05%/*}, PROJECT_BASE_URL: ${flet-github-action-workflows#*/}"
             flet build web --base-url ${flet-github-action-workflows#*/} --route-url-strategy hash
     
     - name: Upload Artifact
