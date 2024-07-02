@@ -37,7 +37,11 @@ jobs:
     - name: Install Python Dependencies
       run: |
         python -m pip install --upgrade pip
-        #pip install -r requirements.txt
+        pip install -r requirements.txt
+        
+    - name:  Install flut 
+      run : |
+        pip install -U flet
   
     - name: Clone repository
       uses: actions/checkout@v4
@@ -47,21 +51,12 @@ jobs:
        channel: any
        flutter-version: 3.19.0
     - run: flutter --version
-
-    - name: Apply latest configuration to Fleet
-      uses: ./.github/gitops-action
-      with:
-        # Run GitOps in dry-run mode for pull requests.
-          dry-run-only: ${{ github.event_name == 'pull_request' && 'true' || 'false' }}
-        # Add FLEET_URL and FLEET_API_TOKEN to the repository secrets.
-        # In addition, specify or add secrets for all the environment variables that are mentioned in the global/team YAML files.
-      env:
-          FLEET_URL: ${{ secrets.FLEET_URL }}
-          FLEET_API_TOKEN: ${{ secrets.FLEET_API_TOKEN }}
-          FLEET_SSO_METADATA: ${{ secrets.FLEET_SSO_METADATA }}
-          FLEET_GLOBAL_ENROLL_SECRET: ${{ secrets.FLEET_GLOBAL_ENROLL_SECRET }}
-          FLEET_WORKSTATIONS_ENROLL_SECRET: ${{ secrets.FLEET_WORKSTATIONS_ENROLL_SECRET }}
-          FLEET_WORKSTATIONS_CANARY_ENROLL_SECRET: ${{ secrets.FLEET_WORKSTATIONS_CANARY_ENROLL_SECRET }}
+    
+    - name: Flet Build Web
+      run: |
+            echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}, USER: ${GITHUB_REPOSITORY%/*}, PROJECT_BASE_URL: ${GITHUB_REPOSITORY#*/}"
+            flet build web --base-url ${GITHUB_REPOSITORY#*/} --route-url-strategy hash
+            
     
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v3
